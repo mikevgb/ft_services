@@ -1,0 +1,18 @@
+###Kubernetes is a production-grade, open-source platform that orchestrates
+the placement (scheduling) and execution of application containers within
+and across computer clusters. #######
+
+
+
+
+kubectl api-versions -> if you see a list of versions everything is ok!
+check minikube
+    minikube version
+start minikube
+    minikube start
+check kubectl
+    kubectl version
+check cluster details
+    kubectl cluster-info
+view nodes in the cluster
+    kubectl get nodes
