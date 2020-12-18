@@ -1,0 +1,13 @@
+start:
+
+minikube start
+
+#in other terminal
+
+echo -e "\n\n\n\e[92mStarting Proxy. After starting it will not output a response.\n"; 
+kubectl proxy
+
+#check
+
+kubectl get pods
+kubectl get services
