@@ -1,9 +1,21 @@
 ## A Pod is a group of one or more application containers (such as Docker) and includes shared storage (volumes), IP address and information about how to run them.
 
-    kubectl get - list resources
-    kubectl describe - show detailed information about a resource
-    kubectl logs - print the logs from a container in a pod
-    kubectl exec - execute a command on a container in a pod
+List resources
+```
+kubectl get
+```
+Show detailed information about a resource
+```
+kubectl describe
+```
+Print the logs from a container in a pod
+```
+kubectl logs
+```
+Execute a command on a container in a pod
+```
+kubectl exec
+```
 
 #### verify that the application is running
 ```docker
