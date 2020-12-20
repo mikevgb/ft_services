@@ -28,3 +28,5 @@ You will also have to set up:
 * In case of a crash or stop of one of the two database containers, you will have to make shure the data persist.
 * You must be able to access the Nginx container by logging into *SSH*.
 * All your containers must restart in case of a crash or stop of one of its componentparts.
+
+#### Usage of Node Port services, Ingress Controller object or kubectlport-forward command is prohibited. Your Load Balancer should be the only entry point for the Cluster. Security is important, don’t expose services that shouldn’t be...

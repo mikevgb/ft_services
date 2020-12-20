@@ -7,23 +7,23 @@ kubectl api-versions
 ```
 if you see a list of versions everything is ok!
 
-#### check minikube
+check minikube
 ```docker
 minikube version
 ```
-#### start minikube
+start minikube
 ```docker
 minikube start
 ```
-#### check kubectl
+check kubectl
 ```docker
 kubectl version
 ```
-#### check cluster details
+check cluster details
 ```docker
 kubectl cluster-info
 ```
-#### view nodes in the cluster
+view nodes in the cluster
 ```docker
 kubectl get nodes
 ```
