@@ -24,9 +24,19 @@ brew homebrew/cask
 ```
 brew install kubernetes
 ```
-
-
-minikube-home variable
+7. Start it with virtualbox
+```
+minikube start --driver=virtualbox
+```
+8. To make virtualbox the default driver
+```
+minikube config set driver virtualbox
+```
+9. Move minikube home to goinfree, set enviorement var with the desire directory.
+```
+MINIKUBE_HOME=/goinfre/mvillaes/minikube
+```
+10. Delete .minikube from home folder
 
 #### what is what
 

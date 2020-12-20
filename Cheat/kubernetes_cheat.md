@@ -12,3 +12,10 @@ kubectl proxy
 kubectl get pods
 kubectl get services
 ```
+#### delete pods
+```
+kubectl delete pods --all
+```
+#### delete vm created by minikube
+```
+minikube delete
