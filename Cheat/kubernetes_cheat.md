@@ -1,6 +1,6 @@
 #### start:
 ```docker
-minikube start
+minikube start --driver=virtualbox
 ```
 #### in other terminal
 ```docker
@@ -19,3 +19,8 @@ kubectl delete pods --all
 #### delete vm created by minikube
 ```
 minikube delete
+```
+#### show Kubernetes Dashboard
+```
+minikube dashboard
+```
