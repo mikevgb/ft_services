@@ -1,0 +1,1 @@
+http://www.smartjava.org/content/practical-kubernetes-tips-for-day-to-day-kubernetes-usage/

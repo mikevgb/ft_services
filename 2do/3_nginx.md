@@ -22,3 +22,7 @@ if you want to show the url of the service use (not working :O)
 ```
 minikube service nginx --url=true
 ```
+migfernas link
+```
+https://www.cyberciti.biz/faq/how-to-install-nginx-web-server-on-alpine-linux/
+```
