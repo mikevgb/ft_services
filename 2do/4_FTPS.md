@@ -9,20 +9,21 @@ SFTP uses only one connection based on SSH, authenticates also with ID, but this
 ```
 https://www.opensourceforu.com/2015/03/set-up-an-ftps-server-in-linux/
 ```
+it seems that sleep infinity is a bad practice, insted we should use ENTRYPOINT
+```
+ENTRYPOINT ["tail", "-f", "/dev/null"]
+```
+link sobre entrypoint
+```
+https://stackoverflow.com/questions/21553353/what-is-the-difference-between-cmd-and-entrypoint-in-a-dockerfile
+```
+other way will be with cat (this is how Jenkins do it) (seems wrong way also)
+
 #### Create
 
 ```
 kubectl run ftps-alpine --image=alpine --port=21 -- sleep infinity
 ```
-it seems that sleep infinity is a bad practice, insted we should use ENTRYPOINT
-```
-ENTRYPOINT ["tail", "-f", "/dev/null"]
-```
-```
-link sobre entrypoint https://stackoverflow.com/questions/21553353/what-is-the-difference-between-cmd-and-entrypoint-in-a-dockerfile
-```
-other way will be with cat (this is how Jenkins do it) (seems wrong way also)
-
 check
 ```
 kubectl describe pod ftps-alpine
@@ -40,57 +41,53 @@ Generate SSL cert
 ```
 kubectl exec ftps-alpine -- openssl req -x509 -nodes -days 365 -newkey rsa:1024 -keyout /etc/vsftpd/vsftpd.pem -out /etc/vsftpd/vsftpd.pem -subj "/C=ES/ST=Madrid/L=Madrid/OU=mikevgb/"
 ```
-now we nano vsftpd.conf
+delete the vsftpd.conf file
 ```
-nano /etc/vsftpd/vsftpd.conf
+kubectl exec ftps-alpine -- rm -rf /etc/vsftpd/vsftpd.conf
 ```
-(old)Enable encryption on data transfer and authentication (add this lines)
+delete content inside vsftpd.conf (not working)
 ```
+kubectl exec ftps-alpine -- ash -c "echo -n > /etc/vsftpd/vsftpd.conf"
+```
+create a new vsftpd.conf with the correct values
+https://linux.die.net/man/5/vsftpd.conf
+```
+kubectl exec -it ftps-alpine -- ash -c "echo anonymous_enable=YES
+background=YES
+seccomp_sandbox=NO
+listen=YES
+write_enable=YES
+local_umask=022
+use_localtime=YES
+chroot_local_user=YES
+dirmessage_enable=YES
+xferlog_enable=YES
+connect_from_port_20=YES
 ssl_enable=YES
 allow_anon_ssl=NO
 force_local_data_ssl=YES
 force_local_logins_ssl=YES
-```
-(old)Include the cert and key file location
-```
 rsa_cert_file=/etc/vsftpd/vsftpd.pem
 rsa_private_key_file=/etc/vsftpd/vsftpd.pem
+ssl_tlsv1=YES
+ssl_sslv2=NO
+ssl_sslv3=NO >> /etc/vsftpd/vsftpd.conf"
 ```
-(old)enable TLS
+Create a user_list for login (inside the pod)
 ```
-ssl_sslv2=YES
-ssl_sslv3=YES
+adduser $user_name
 ```
-ERROR 500: could not bind listening IPv4 socket, comment
+Now we start the vsftpd service and pass the .conf as argument (not working, had to run from inside the terminal)
 ```
-listen=YES
+kubectl exec ftps-alpine -- /usr/sbin/vsftpd /etc/vsftpd.conf
 ```
-Now we start the vsftpd service and pass the .conf as argument
-(hangs)
-```
-/etc/init.d/vsftpd /etc/vsftpd/vsftpd.conf
-```
-(no)
-```
-/etc/init.d/vsftpd start
-```
-(no)
-```
-kubectl exec ftps-alpine -- /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
-```
-(old)
-```
-exec /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
-```
-
-
 
 
 
 
 expose the service
 ```
-kubectl expose deployment/ftps-alpine --type="LoadBalancer"
+kubectl expose pod ftps-alpine --type=LoadBalancer --port=21 --target-port=21
 ```
 
 Yaml example:

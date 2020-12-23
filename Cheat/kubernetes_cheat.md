@@ -24,3 +24,7 @@ minikube delete
 ```
 minikube dashboard
 ```
+#### shell to the container (we use ash for alpine)
+```
+kubectl exec -ti ftps-alpine ash
+```
