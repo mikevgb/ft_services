@@ -16,6 +16,10 @@ kubectl get services
 ```
 kubectl delete pods --all
 ```
+#### delete services
+```
+kubectl delete services --all
+```
 #### delete vm created by minikube
 ```
 minikube delete

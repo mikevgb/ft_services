@@ -4,6 +4,27 @@ Create container (this is _wrong_, should be created by my me)
 ```
 kubectl run nginx --image=nginx --port=80
 ```
+_correct_
+```
+kubectl run nginx --image=alpine --port=80 -- sleep infinity
+```
+update
+```
+kubectl exec nginx -- apk update
+```
+install nginx
+```
+kubectl exec nginx -- apk add nginx
+```
+Create user and nginx directory
+```
+kubectl exec nginx -- adduser -h /home/www/ nginx_user
+```
+start nginx
+```
+kubectl exec nginx -- /etc/init.d/nginx start
+```
+
 Deployment can be see in the kubernetes dashboard
 
 Check from the terminal

@@ -71,18 +71,35 @@ rsa_cert_file=/etc/vsftpd/vsftpd.pem
 rsa_private_key_file=/etc/vsftpd/vsftpd.pem
 ssl_tlsv1=YES
 ssl_sslv2=NO
-ssl_sslv3=NO >> /etc/vsftpd/vsftpd.conf"
+ssl_sslv3=NO > /etc/vsftpd/vsftpd.conf"
 ```
 Create a user_list for login (inside the pod)
 ```
-adduser $user_name
+kubectl exec ftps-alpine adduser test
 ```
+create a folder for this user
+```
+kubectl exec ftps-alpine mkdir /home/test/ftp
+```
+give user test the ownership of the folder
+```
+kubectl exec ftps-alpine chown test /home/test/ftp
+```
+create a file inside that folder
+```
+kubectl exec ftps-alpine 
 Now we start the vsftpd service and pass the .conf as argument (not working, had to run from inside the terminal)
 ```
-kubectl exec ftps-alpine -- /usr/sbin/vsftpd /etc/vsftpd.conf
+kubectl exec ftps-alpine -- /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
 ```
-
-
+test
+```
+curl 192.168.99.102:21 -u $user_name
+```
+or
+```
+curl -o -u test:123 192.168.99.10:21/test.txt
+```
 
 
 expose the service
