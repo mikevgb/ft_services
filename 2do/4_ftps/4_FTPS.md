@@ -34,7 +34,7 @@ kubectl exec -ti ftps-alpine ash
 ```
 we can also execute commands directly on the container with exec and the name of the pod
 ```
-kubectl exec ftps-alpine apk add vsftpd openssl nano
+kubectl exec ftps-alpine -- apk add vsftpd openssl nano
 ```
 now we will create the SSL cert (_rsa_cert_file_) and RSA key (_rsa_private_key_file_) we will store it in _/etc/vsftpd/_
 Generate SSL cert

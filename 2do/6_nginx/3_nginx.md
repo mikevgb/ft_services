@@ -20,7 +20,30 @@ Create user and nginx directory
 ```
 kubectl exec nginx -- adduser -h /home/www/ nginx_user
 ```
-start nginx
+or, in alpine guide for nginx
+```
+kubectl exec nginx -- adduser -D -g 'www' www
+```
+create a directory for html files
+```
+kubectl exec nginx -- mkdir /www
+```
+change permissions
+```
+kubectl exec nginx -- chown -R www:www /var/lib/nginx
+kubectl exec nginx -- chown -R www:www /www
+```
+back up original nginx conf file
+```
+kubectl exec nginx -- mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.orig
+```
+copy moded nginx conf and index
+```
+kubectl cp ~/ft_services/2do/3_nginx/nginx.conf nginx:/etc/nginx/nginx.conf
+
+kubectl cp ~/ft_services/2do/3_nginx/index.html nginx:/www/index.html
+```
+start nginx !(not working atm)
 ```
 kubectl exec nginx -- /etc/init.d/nginx start
 ```
