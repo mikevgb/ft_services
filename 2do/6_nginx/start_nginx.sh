@@ -6,7 +6,7 @@ kubectl run nginx --image=alpine --port=80 -- sleep infinity
 kubectl exec nginx -- apk update
 
 #install ngix and openssl
-kubectl exec nginx -- apk add nginx openssl
+kubectl exec nginx -- apk add nginx openssl openssh
 
 #mod permissions
 kubectl exec nginx -- chown -R www-data /var/www/*
