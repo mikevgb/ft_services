@@ -36,3 +36,9 @@ kubectl exec -ti ftps-alpine ash
 ```
 kubectl apply -f $yaml_file_dir
 ```
+
+
+
+
+
+https://12factor.net

@@ -1,3 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+spec:
+  selector:
+    app: nginx
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+    - port: 80
+      targetPort: 80
+      name: http
+    - port: 443
+      targetPort: 443
+      name: https
+    - port: 22
+      targetPort: 22
+      name: ssh
+
+---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -15,13 +37,13 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: alpine
+        image: alpine-nginx
         args:
           - sleep
           - infinity
-        imagePullPolicy: Always
+        imagePullPolicy: Never
         ports:
         - containerPort: 80
         - containerPort: 443
+        - containerPort: 22
           protocol: TCP
-        #in the service type: LoadBalancer
