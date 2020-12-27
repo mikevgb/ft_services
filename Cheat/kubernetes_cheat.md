@@ -32,3 +32,7 @@ minikube dashboard
 ```
 kubectl exec -ti ftps-alpine ash
 ```
+#### run yaml
+```
+kubectl apply -f $yaml_file_dir
+```
