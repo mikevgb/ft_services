@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ftps
+  namespace: default
+  labels:
+    app: vsftpd
+spec:
+  externalTrafficPolicy: Local
+  ports:
+    - protocol: TCP
+    - port: 21
+      targetPort: 21
+      name: ftp
+  selector:
+    app: vsftpd
+  type: LoadBalancer
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ftps
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vsftpd
+  template:
+    metadata:
+      labels:
+        app: vsftpd
+    spec:
+      containers:
+      - name: ftps
+        image: ftps
+        args:
+          - sleep
+          - infinity
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 21
+          name: ftp

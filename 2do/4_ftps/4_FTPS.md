@@ -45,7 +45,7 @@ delete the vsftpd.conf file
 ```
 kubectl exec ftps-alpine -- rm -rf /etc/vsftpd/vsftpd.conf
 ```
-delete content inside vsftpd.conf (not working)
+(no)delete content inside vsftpd.conf (not working)
 ```
 kubectl exec ftps-alpine -- ash -c "echo -n > /etc/vsftpd/vsftpd.conf"
 ```

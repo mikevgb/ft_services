@@ -2,10 +2,11 @@ apiVersion: v1
 kind: Service
 metadata:
   name: nginx
-spec:
-  selector:
+  namespace: default
+  labels:
     app: nginx
-  type: LoadBalancer
+spec:
+  externalTrafficPolicy: Local
   ports:
     - protocol: TCP
     - port: 80
@@ -17,6 +18,9 @@ spec:
     - port: 22
       targetPort: 22
       name: ssh
+  selector:
+    app: nginx
+  type: LoadBalancer
 
 ---
 
@@ -37,7 +41,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: ngin_pine
+        image: nginx
         args:
           - sleep
           - infinity
