@@ -8,3 +8,5 @@ kubectl proxy &
 sleep 5
 echo -e "\n\n\n\e[92mStarting kubernetes dashboard.\n";
 minikube dashboard
+echo -e "connect docker with minikube"
+eval $(minikube -p minikube docker-env)

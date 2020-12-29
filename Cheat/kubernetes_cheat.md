@@ -2,6 +2,11 @@
 ```docker
 minikube start --driver=virtualbox
 ```
+
+#### point docker to minikube
+```
+eval $(minikube -p minikube docker-env)	
+```
 #### in other terminal
 ```docker
 echo -e "\n\n\n\e[92mStarting Proxy. After starting it will not output a response.\n"; 
