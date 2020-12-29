@@ -17,6 +17,6 @@ COPY    ./vsftpd.conf ./etc/vsftpd/vsftpd.conf
       
 EXPOSE  21
 
-CMD     ["nginx", "-g", "daemon off;"]
+CMD     ["vsftp", "-g", "daemon off;"]
 
 #ENTRYPOINT 

@@ -8,15 +8,17 @@ metadata:
 spec:
   externalTrafficPolicy: Local
   ports:
-    - protocol: TCP
     - port: 80
       targetPort: 80
+      protocol: TCP
       name: http
     - port: 443
       targetPort: 443
+      protocol: TCP
       name: https
     - port: 22
       targetPort: 22
+      protocol: TCP
       name: ssh
   selector:
     app: nginx

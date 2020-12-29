@@ -36,7 +36,14 @@ kubectl exec -ti ftps-alpine ash
 ```
 kubectl apply -f $yaml_file_dir
 ```
+#### check if a yaml file is valid
 
+kubeval $name_of_the_yaml.yaml
+
+#### install kubeval with brew
+
+brew tap instrumenta/instrumenta
+brew install kubeval
 
 
 
