@@ -1,3 +1,4 @@
-#!/bin/bash
+#start vsftpd
 
-/usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
+exec /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
+#vsftpd /etc/vsftpd/vsftpd.conf
