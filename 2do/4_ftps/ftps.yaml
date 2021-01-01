@@ -8,10 +8,14 @@ metadata:
 spec:
   externalTrafficPolicy: Local
   ports:
-    - protocol: TCP
     - port: 21
       targetPort: 21
-      name: ftp
+      protocol: TCP
+      name: ftpcontrol
+    - port: 20
+      targetPort: 20
+      protocol: TCP
+      name: ftpdata
   selector:
     app: vsftpd
   type: LoadBalancer
@@ -42,4 +46,6 @@ spec:
         imagePullPolicy: Never
         ports:
         - containerPort: 21
-          name: ftp
+          name: ftpcontrol
+        - containerPort: 20
+          name: ftpdata
