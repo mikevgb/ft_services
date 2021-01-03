@@ -1,4 +1,3 @@
-#!/bin/bash
 #connect docker with kubernetes
 eval $(minikube docker-env)
 #run dockerfile
