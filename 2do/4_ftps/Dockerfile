@@ -19,7 +19,7 @@ COPY    ./init.sh ./
 EXPOSE  20 21
 # RUN     chmod +x /init.sh
 #CMD     /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
-CMD     ./init.sh
+CMD     ash init.sh
 #ENTRYPOINT     [ "/bin/sh" ]
 #CMD /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
 #ENTRYPOINT ["/init.sh"]
