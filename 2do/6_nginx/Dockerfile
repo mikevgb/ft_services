@@ -16,6 +16,7 @@ COPY    ./index.html ./www/index.html
       
 EXPOSE  80 443 22
 
-CMD     ["nginx", "-g", "pid /tmp/nginx.pid;"]
-
-#ENTRYPOINT
+#not working
+#CMD     ["nginx", "-g", "pid /tmp/nginx.pid;"]
+#use nginx inside pod
+ENTRYPOINT nginx

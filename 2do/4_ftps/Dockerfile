@@ -15,11 +15,13 @@ RUN     openssl req -x509 -nodes -days 365 -newkey rsa:1024 -keyout /etc/vsftpd/
         #&& touch /var/log/vsftpd.log
 #RUN     chmod 777 /dev/null
 COPY    ./vsftpd.conf /etc/vsftpd/vsftpd.conf
-COPY    ./init.sh ./
+#COPY    ./init.sh ./
 EXPOSE  20 21
 # RUN     chmod +x /init.sh
 #CMD     /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
-CMD     ash init.sh
+#CMD     ash init.sh
 #ENTRYPOINT     [ "/bin/sh" ]
 #CMD /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
-#ENTRYPOINT ["/init.sh"]
+ENTRYPOINT     vsftpd
+CMD            /etc/vsftpd/vsftpd.conf
+#CMD     /etc/vsftpd/vsftpd.conf
