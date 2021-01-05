@@ -6,17 +6,28 @@ metadata:
   labels:
     app: mysql
 spec:
-  externalTrafficPolicy: Local
   ports:
     - port: 3306
       targetPort: 3306
       protocol: TCP
+      name: mysqlport
   selector:
-    app: mysql
+   app: mysql
   type: ClusterIP
-
 ---
-
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pv-claim
+  labels:
+    app: mysql
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 32Mi
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -38,6 +49,20 @@ spec:
         args:
           - sleep
           - infinity
+        #env:
+        #- name: MYSQL_ROOT_PASSWORD
+        #  valueFrom:
+        #    secretKeyRef:
+        #      name: mysql-pass
+        #      key: password
         imagePullPolicy: Never
         ports:
         - containerPort: 3306
+          name: mysqlport
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim

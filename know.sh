@@ -10,3 +10,6 @@ kubectl get pods
 #list services
 echo "----->SERVICES";
 kubectl get services
+echo "----->P_VOLUMES";
+kubectl get pv
+kubectl get pvc
