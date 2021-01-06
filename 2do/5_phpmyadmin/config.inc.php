@@ -14,7 +14,7 @@
  * This is needed for cookie based authentication to encrypt password in
  * cookie. Needs to be 32 chars long.
  */
-$cfg['blowfish_secret'] = 'mikevgb'; /* YOU MUST FILL IN THIS FOR COOKIE AUTH! */
+$cfg['blowfish_secret'] = 'ykNpg08||eLDZc}9ZFVF5y`X/*mgw@cb*)2Oe+-v=[n?HUQf4*tA=k2cKZuzjhz>'; /* YOU MUST FILL IN THIS FOR COOKIE AUTH! */
 
 /**
  * Servers configuration
@@ -34,7 +34,7 @@ $cfg['Servers'][$i]['extension'] = 'mysqli';
 $cfg['Servers'][$i]['connect_type'] = 'tcp';
 $cfg['Servers'][$i]['compress'] = false;
 $cfg['Servers'][$i]['AllowNoPassword'] = true;
-
+//$cfg['AllowArbitraryServer'] = true;
 /**
  * phpMyAdmin configuration storage settings.
  */
@@ -42,8 +42,8 @@ $cfg['Servers'][$i]['AllowNoPassword'] = true;
 /* User used to manipulate with storage */
 //$cfg['Servers'][$i]['controlhost'] = '';
 //$cfg['Servers'][$i]['controlport'] = '3306';
-// $cfg['Servers'][$i]['controluser'] = 'root';
- //$cfg['Servers'][$i]['controlpass'] = '';
+//$cfg['Servers'][$i]['controluser'] = 'root';
+//$cfg['Servers'][$i]['controlpass'] = '';
 
 /* Storage database and tables */
 // $cfg['Servers'][$i]['pmadb'] = 'phpmyadmin';
