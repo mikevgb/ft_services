@@ -4,16 +4,16 @@
 # This group is read by the server
 [mysqld]
 user = root
-datadir = /var/lib/mysql
+datadir = /var/lib/mysql/
 port = 3306
 # possible bug when log-bin enabled https://jira.mariadb.org/browse/MDEV-23660
-# log-bin = /var/lib/mysql/mysql-bin
+log-bin = /var/lib/mysql/mysql-bin
 bind-address= 0.0.0.0
 # socket= /run/mysqld/mysqld.sock
 skip-networking = false
 
 # Disabling symbolic-links is recommended to prevent assorted security risks
-symbolic-links=0
+#symbolic-links=0
 
 # include all files from the config directory
-!includedir /etc/my.cnf.d
+#!includedir /etc/my.cnf.d
