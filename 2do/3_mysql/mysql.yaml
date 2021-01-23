@@ -1,96 +1,82 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysql
-  namespace: default
   labels:
     app: mysql
+  name: mysql
 spec:
   ports:
-    - port: 3306
-      targetPort: 3306
-      protocol: TCP
-      name: mysqlport
+  - port: 3306
+    protocol: TCP
+    targetPort: 3306
   selector:
-   app: mysql
-  type: ClusterIP
+    app: mysql
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mysql-pv
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 32Mi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/var/lib/mysql"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: mysql
+  name: mysql-pvc
   labels:
     app: mysql
 spec:
+  storageClassName: manual
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
       storage: 32Mi
 ---
-#apiVersion: apps/v1
-#kind: Deployment
-#metadata:
-#  name: mysql
-#  namespace: default
-#spec:
-#  replicas: 1
-#  selector:
-#    matchLabels:
-#      app: mysql
-#  template:
-#    metadata:
-#      labels:
-#        app: mysql
-#    spec:
-#      containers:
-#      - name: mysql
-#        image: mysql
-#        args:
-#          - sleep
-#          - infinity
-#        imagePullPolicy: Never
-#        ports:
-#        - containerPort: 3306
-#          name: mysqlport
-#      volumes:
-#      - name: mysql
-#        persistentVolumeClaim:
-#          claimName: mysql
-#      restartPolicy: Always
-#        volumeMounts:
-#          - name: mysql
-#          mountPath: /var/lib/mysql
----
-  apiVersion: apps/v1
-  kind: Deployment
-  metadata:
-    name: mysql
-    labels:
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mysql
+  name: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
       app: mysql
-  spec:
-    selector:
-      matchLabels:
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
         app: mysql
-    template:
-      metadata:
-        labels:
-          app: mysql
-      spec:
-        containers:
+    spec:
+      containers:
+      - image: mysql
+        imagePullPolicy: Never
+        name: mysql
+        args:
+          - sleep
+          - infinity
+        ports:
         - name: mysql
-          image: mysql
-          args:
-            - sleep
-            - infinity
-          imagePullPolicy: Never
-          ports:
-          - containerPort: 3306
-            name: mysql
-          volumeMounts:
-          - name: mysql
-            mountPath: /var/lib/mysql
-        volumes:
-        - name: mysql
-          persistentVolumeClaim:
-            claimName: mysql
+          containerPort: 3306
+        volumeMounts:
+        - name: mysql-pv-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-pv-storage
+        persistentVolumeClaim:
+          claimName: mysql-pvc
+      restartPolicy: Always
