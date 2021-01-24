@@ -1,0 +1,78 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: influxdb
+  labels:
+    app: influxdb
+spec:
+  ports:
+    - port: 8086
+      targetPort: 8086
+      protocol: TCP
+  selector:
+    app: influxdb
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: influxdb-pv
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 32Mi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/var/lib/influxdb"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: influxdb-pvc
+  labels:
+    app: mysql
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 32Mi
+---
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: influxdb
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: influxdb
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: influxdb
+    spec:
+      containers:
+      - name: influxdb
+        image: influxdb
+        args:
+          - sleep
+          - infinity
+        imagePullPolicy: Never
+        ports:
+        - name: influxdb
+          containerPort: 8086
+        volumeMounts:
+          - name: influxdb-pv-storage
+            mountPath: /var/lib/influxdb
+      volumes:
+      - name: influxdb-pv-storage
+        persistentVolumeClaim:
+          claimName: influxdb-pvc
+      restartPolicy: Always
