@@ -22,6 +22,12 @@ ADD         ./ssl/* ./etc/nginx/ssl/
 #not working
 #CMD     ["nginx", "-g", "pid /tmp/nginx.pid;"]
 #use nginx inside pod
-ENTRYPOINT  nginx
+ENTRYPOINT  nginx \
+            && /usr/sbin/sshd -f /etc/ssh/sshd_config
 
 #openssl req -x509 -nodes -days 365 -newkey rsa:1024 -keyout mikevgb.key -out mikevgb.crt -subj "/C=ES/ST=Madrid/L=42Madrid/OU=mikevgb/"
+
+#add key to ssh-agent
+# ssh-add ~/path_to_key/id_rsa
+#add key to server
+# ssh-add ~/.ssh/id_rsa
