@@ -2,41 +2,33 @@
 
 1. install docker for mac (in school run "mover_docker.sh" so docker uses goinfree folder)
 2. install virtualbox from manage software center
-```
-brew cask install virtualbox
-```
-```
-brew cask reinstall virtualbox
-```
-3. install kubectl 
-```
-brew install kubectl
-```
-4. install minikube
+3. install minikube
 ```
 brew install minikube
 ```
-5. 
-```
-brew homebrew/cask
-```
-6. 
-```
-brew install kubernetes
-```
-7. Start it with virtualbox
-```
-minikube start --driver=virtualbox
-```
-8. To make virtualbox the default driver
+4. To make virtualbox the default driver
 ```
 minikube config set driver virtualbox
 ```
-9. Move minikube home to goinfree, set enviorement var with the desire directory.
 ```
-MINIKUBE_HOME=/goinfre/mvillaes/minikube
+minikube delete
 ```
-10. Delete .minikube from home folder
+```
+minikube start
+```
+5. Create a folder on sgoinfre
+```
+mkdir -p /sgoinfre/students/${USER}/.minikube
+```
+6. Move some minikube files to sgoinfree
+```
+bash move_minikube.sh
+```
+7. Delete .minikube from home folder
+```
+rm -rf $HOME/.minikube
+```
+8. run start.sh
 
 #### what is what
 
